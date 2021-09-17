@@ -13,39 +13,33 @@ from main import convert_record_and_send_to_cloud_app
 
 
 class AcceptanceTest(unittest.TestCase):
-    def setUp(self):
-        self.config = ConfigReader("../../config.json").read_auth()
-        self.record_convertor = XunFeiConvertor(self.config.appid, self.config.secret_key)
-        self.test_file = "D:/ylliu/tz/record_for_test/3.m4a"
-        self.body = "喂喂喂喂喂喂喂喂。"
-
+    # def setUp(self):
     def test_save_converted_content_to_local_txt_use_default_file_path(self):
-        # configure a json file
+        #given
         config = {
             "appid": "fb0d46b1",
             "secret_key": "28d4a3f53e3a0386ecb941522f1335c8",
+            "file_path": "",
+            "save_type": "local",
             "token": "WkXkkjiHp6JHy8Xj2GrHKoA8j24be9cvFBYOOQLP",
             "namespace": "baili-qq4sf/bgzr5s",
             "format": "html",
-            "file_path": "",
-            "save_type": "local"
         }
         with open("../../config_test.json", "w", encoding="utf-8") as f:
             json.dump(config, f)
-        # copy a file to the run path
+
         case_dir = "D:/ylliu/tz/record_base_file/"
         files_to_be_copied = case_dir + "3.m4a"
         shutil.copy(files_to_be_copied, os.getcwd())
-
+        # when
         convert_record_and_send_to_cloud_app("../../config_test.json")
-
-        self.assertTrue(os.path.exists(self.config.file_path + "3.txt"))
-        with open(self.config.file_path + "3.txt", "r", encoding="utf-8") as f:
+        #then
+        self.assertTrue(os.path.exists(os.getcwd() + "/" + "3.txt"))
+        with open(os.getcwd() + "/" + "3.txt", "r", encoding="utf-8") as f:
             content = f.readlines()
 
         self.assertEqual(['喂喂喂喂喂喂喂喂。'], content)
-
-        os.remove(self.config.file_path + "3.txt")
+        os.remove(os.getcwd() + "/" + "3.txt")
 
     def test_save_converted_content_to_local_txt_use_config_file_path(self):
         # configure a json file
@@ -60,22 +54,21 @@ class AcceptanceTest(unittest.TestCase):
         }
         with open("../../config_test.json", "w", encoding="utf-8") as f:
             json.dump(config, f)
-        # copy a file to the run path
         case_dir = "D:/ylliu/tz/record_base_file/"
         files_to_be_copied = case_dir + "3.m4a"
         shutil.copy(files_to_be_copied, "D:/ylliu/tz/record/")
 
         convert_record_and_send_to_cloud_app("../../config_test.json")
 
-        self.assertTrue(os.path.exists(self.config.file_path + "3.txt"))
-        with open(self.config.file_path + "3.txt", "r", encoding="utf-8") as f:
+        created_file = "D:/ylliu/tz/record/3.txt"
+        self.assertTrue(os.path.exists(created_file))
+        with open(created_file, "r", encoding="utf-8") as f:
             content = f.readlines()
 
         self.assertEqual(['喂喂喂喂喂喂喂喂。'], content)
-        os.remove(self.config.file_path + "3.txt")
+        os.remove(created_file)
 
     def test_save_converted_content_to_yuque_note_use_default_file_path(self):
-        # configure a json file
         config = {
             "appid": "fb0d46b1",
             "secret_key": "28d4a3f53e3a0386ecb941522f1335c8",
@@ -87,7 +80,6 @@ class AcceptanceTest(unittest.TestCase):
         }
         with open("../../config_test.json", "w", encoding="utf-8") as f:
             json.dump(config, f)
-        # copy a file to the run path
         case_dir = "D:/ylliu/tz/record_base_file/"
         files_to_be_copied = case_dir + "3.m4a"
         shutil.copy(files_to_be_copied, os.getcwd())
@@ -112,7 +104,6 @@ class AcceptanceTest(unittest.TestCase):
         self.assertEqual(200, delete_response.status_code)
 
     def test_save_converted_content_to_yuque_note_use_config_file_path(self):
-        # configure a json file
         config = {
             "appid": "fb0d46b1",
             "secret_key": "28d4a3f53e3a0386ecb941522f1335c8",
@@ -124,7 +115,6 @@ class AcceptanceTest(unittest.TestCase):
         }
         with open("../../config_test.json", "w", encoding="utf-8") as f:
             json.dump(config, f)
-        # copy a file to the run path
         case_dir = "D:/ylliu/tz/record_base_file/"
         files_to_be_copied = case_dir + "3.m4a"
         shutil.copy(files_to_be_copied, os.getcwd())

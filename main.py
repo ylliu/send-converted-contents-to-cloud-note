@@ -2,6 +2,7 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import os
 
 from app.ConfigReader import ConfigReader
 from app.ContentSenderFactory import ContentSenderFactory
@@ -20,5 +21,6 @@ def convert_record_and_send_to_cloud_app(config_file):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     convert_record_and_send_to_cloud_app("config.json")
+    os.system("pause")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

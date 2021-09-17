@@ -3,8 +3,8 @@ class TextOptimizer(object):
         self.origin_text = origin_text
 
     def replace_common_spoken_words(self):
-        common_spoken_words = ["嗯", "呃", "啊", "哈", "就是", "这个", "是吧", "那个", "那么", "那", "然后", "的话", "吧", "就", "呢", "噢",
-                               "哦"]
+        common_spoken_words = ["嗯", "呃", "啊", "哈", "就是", "这个", "是吧", "那个", "那么",
+                               "那", "然后", "的话", "吧", "就", "呢", "噢", "哦","唉"]
         for common_word in common_spoken_words:
             self.origin_text = str(self.origin_text).replace(common_word, "")
             # print(self.origin_text)
