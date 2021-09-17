@@ -16,9 +16,9 @@ class RecordConvertServiceTest(unittest.TestCase):
         sender = StubSender(self.config.token, self.config.namespace, self.config.format)
 
         self.record_convert_service = RecordConvertService(record_convertor, sender, self.config.file_path)
-        filenames = os.listdir(self.config.file_path)
-        for file in filenames:
-            os.remove(self.config.file_path + file)
+        # filenames = os.listdir(self.config.file_path)
+        # for file in filenames:
+        #     os.remove(self.config.file_path + file)
         case_dir = "D:/ylliu/tz/record_base_file/"
         files_to_be_copied = [case_dir + "1.mp3",
                               case_dir + "3.m4a",
@@ -27,11 +27,17 @@ class RecordConvertServiceTest(unittest.TestCase):
         for file in files_to_be_copied:
             shutil.copy(file, self.config.file_path)
 
+    def tearDown(self):
+        files = self.record_convert_service.get_supported_audio_files_from()
+        for file in files:
+            os.remove(file)
+
     def test_get_supported_audio_files_from_path(self):
         files_expected = [self.config.file_path + "1.mp3",
                           self.config.file_path + "3.m4a",
                           self.config.file_path + "9-12-中文名字.mp3",
                           self.config.file_path + "9.mp3"]
+        print(files_expected)
         files = self.record_convert_service.get_supported_audio_files_from()
         print(files)
         self.assertCountEqual(files_expected, files)
@@ -42,6 +48,7 @@ class RecordConvertServiceTest(unittest.TestCase):
         self.assertEqual("9-12-中文名字",
                          self.record_convert_service.extract_file_name_form(
                              self.config.file_path + "9-12-中文名字.mp3"))
+        files = self.record_convert_service.get_supported_audio_files_from()
 
     def test_should_convert_record_and_send_out(self):
         json_response = self.record_convert_service.convert(self.config.file_path + "9-12-中文名字.mp3")

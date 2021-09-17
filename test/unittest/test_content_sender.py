@@ -37,6 +37,7 @@ class ContentSenderTest(unittest.TestCase):
         with open(saved_file, "r", encoding='utf-8') as f:
             data = f.readline()
         self.assertEqual(self.body, data)
+        os.remove(saved_file)
 
     # Do I need to test test sub
     def test_should_send_content_using_test_stub(self):
