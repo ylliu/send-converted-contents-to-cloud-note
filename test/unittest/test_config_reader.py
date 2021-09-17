@@ -1,3 +1,5 @@
+import json
+import os
 import unittest
 
 from app.ConfigReader import ConfigReader
@@ -5,11 +7,24 @@ from app.ConfigReader import ConfigReader
 
 class ConfigReaderTest(unittest.TestCase):
     def test_should_return_config_info(self):
-        config = ConfigReader("../../config.json").read_auth()
-        self.assertEqual(config.appid, "fb0d46b1")
-        self.assertEqual(config.secret_key, "28d4a3f53e3a0386ecb941522f1335c8")
-        self.assertEqual(config.token, "WkXkkjiHp6JHy8Xj2GrHKoA8j24be9cvFBYOOQLP")
-        self.assertEqual(config.namespace, "baili-qq4sf/bgzr5s")
+        # the config.json should be created by test
+        config = {
+            "appid": "123123",
+            "secret_key": "key3432423",
+            "token": "tokenerywirwe",
+            "namespace": "namespace3398hffsd",
+            "format": "html",
+            "file_path": "D:/ylliu/tz/record/",
+            "save_type": "yuque"
+        }
+        with open("../../config_test.json", "w", encoding="utf-8") as f:
+            json.dump(config, f)
+        config = ConfigReader("../../config_test.json").read_auth()
+        self.assertEqual(config.appid, "123123")
+        self.assertEqual(config.secret_key, "key3432423")
+        self.assertEqual(config.token, "tokenerywirwe")
+        self.assertEqual(config.namespace, "namespace3398hffsd")
         self.assertEqual(config.format, "html")
         self.assertEqual(config.file_path, "D:/ylliu/tz/record/")
-        self.assertEqual(config.save_type, "local")
+        self.assertEqual(config.save_type, "yuque")
+        os.remove("../../config_test.json")

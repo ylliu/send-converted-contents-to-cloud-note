@@ -20,7 +20,8 @@ class RecordConvertService(object):
             if file.split(".")[1] not in format_supported:
                 continue
             result.append(os.path.join(self.file_path, file))
-
+        if len(result) == 0:
+            print("请检查" + self.file_path + "下是否放置了音频文件")
         return result
 
     def extract_file_name_form(self, file_path):

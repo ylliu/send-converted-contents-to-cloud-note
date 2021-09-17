@@ -12,11 +12,12 @@ class ContentSenderTest(unittest.TestCase):
 
     def setUp(self):
         self.config = ConfigReader("../../config.json").read_auth()
-        self.title = "测试的标题"
+        self.title = "测试的标题1"
         self.body = "测试的内容"
 
     # the true service where to place it
     def test_should_send_content_to_cloud_note(self):
+        self.config.save_type = "yuque"
         self.content_sender = YuQueSender(self.config.token, self.config.namespace, self.config.format)
         response = self.content_sender.send(self.title, self.body)
         json_data = json.loads(response)
@@ -25,8 +26,10 @@ class ContentSenderTest(unittest.TestCase):
         self.assertEqual(self.title, json_data["data"]["title"])
 
     def test_should_save_converted_contents_to_local_machine(self):
+        self.config.save_type = "local"
         saved_file = self.config.file_path + self.title + ".txt"
-        os.remove(saved_file)
+        if os.path.exists(saved_file):
+            os.remove(saved_file)
         # send to local file use namespace as local path
         self.content_sender = LocalSender(self.config.token, self.config.file_path, self.config.format)
         self.content_sender.send(self.title, self.body)
