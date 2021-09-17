@@ -13,7 +13,7 @@ class ContentSenderFactoryTest(unittest.TestCase):
         content_sender = ContentSenderFactory(config).create()
         self.assertIsInstance(content_sender, LocalSender)
 
-        config = Config("", "", "", "", "", "", "yuque")
+        config = Config("", "", "", "", "", "", "yuque")  
         content_sender = ContentSenderFactory(config).create()
         self.assertIsInstance(content_sender, YuQueSender)
 
