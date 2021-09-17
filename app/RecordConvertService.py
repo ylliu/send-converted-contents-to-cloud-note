@@ -12,10 +12,13 @@ class RecordConvertService(object):
         self.content_sender = content_sender
         self.file_path = file_path
 
-    def get_files_from(self):
+    def get_supported_audio_files_from(self):
         result = []
+        format_supported = ["wav", "flac", "opus", "m4a", "mp3"]
         files = os.listdir(self.file_path)
         for file in files:
+            if file.split(".")[1] not in format_supported:
+                continue
             result.append(os.path.join(self.file_path, file))
 
         return result
@@ -43,7 +46,7 @@ class RecordConvertService(object):
                       json_data["format"])
 
     def send_converted_contents_to_cloud_note(self):
-        file_paths = self.get_files_from()
+        file_paths = self.get_supported_audio_files_from()
         for file_path in file_paths:
             self.convert(file_path)
             # 删除文件，防止出现忘记删除文件，导致重新识别浪费转写服务时长

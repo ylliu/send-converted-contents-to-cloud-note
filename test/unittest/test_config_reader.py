@@ -12,3 +12,4 @@ class ConfigReaderTest(unittest.TestCase):
         self.assertEqual(config.namespace, "baili-qq4sf/bgzr5s")
         self.assertEqual(config.format, "html")
         self.assertEqual(config.file_path, "D:/ylliu/tz/record/")
+        self.assertEqual(config.save_type, "local")
