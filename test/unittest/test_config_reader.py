@@ -5,6 +5,7 @@ import unittest
 from app.ConfigReader import ConfigReader
 
 
+
 class ConfigReaderTest(unittest.TestCase):
     def test_should_return_config_info(self):
         # the config.json should be created by test
