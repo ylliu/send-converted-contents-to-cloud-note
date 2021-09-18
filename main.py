@@ -10,7 +10,7 @@ from app.RecordConvertService import RecordConvertService
 from app.XunFeiConvertor import XunFeiConvertor
 
 
-def convert_record_and_send_to_cloud_app(config_file):
+def convert_record_and_send_out(config_file):
     config = ConfigReader(config_file).read_auth()
     record_convertor = XunFeiConvertor(config.appid, config.secret_key)
     sender = ContentSenderFactory(config).create()
@@ -20,7 +20,7 @@ def convert_record_and_send_to_cloud_app(config_file):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    convert_record_and_send_to_cloud_app("config.json")
+    convert_record_and_send_out("config.json")
     os.system("pause")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
